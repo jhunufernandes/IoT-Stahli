@@ -13,9 +13,9 @@ const char* password = "allankardec";
 WiFiServer server(80);
 
 // Pins definitions
-const int lamp1 = 16;
-const int lamp2 = 5;
-const int reset = 12;
+const int lamp1 = 16; //D0
+const int lamp2 = 14; //D5
+const int reset = 12; //D6
 
 // lamp states
 int lamp1_state_value = 0;
@@ -112,32 +112,24 @@ void loop() {
   client.flush();
 
   if (request.indexOf("/lamp1=ON") != -1)  {
-    digitalWrite(lamp1, HIGH);
     lamp1_state_value = HIGH;
   }
   if (request.indexOf("/lamp1=OFF") != -1)  {
-    digitalWrite(lamp1, LOW);
     lamp1_state_value = LOW;
   }
 
   if (request.indexOf("/lamp2=ON") != -1)  {
-    digitalWrite(lamp2, HIGH);
     lamp2_state_value = HIGH;
   }
   if (request.indexOf("/lamp2=OFF") != -1)  {
-    digitalWrite(lamp2, LOW);
     lamp2_state_value = LOW;
   }
 
   if (request.indexOf("/lamp12=ON") != -1)  {
-    digitalWrite(lamp1, HIGH);
-    digitalWrite(lamp2, HIGH);
     lamp1_state_value = HIGH;
     lamp2_state_value = HIGH;
   }
   if (request.indexOf("/lamp12=OFF") != -1)  {
-    digitalWrite(lamp1, LOW);
-    digitalWrite(lamp2, LOW);
     lamp1_state_value = LOW;
     lamp2_state_value = LOW;
   }
@@ -148,8 +140,8 @@ void loop() {
   }
 
   // Set lampPin according to the request
-  // digitalWrite(lamp1, lamp1_state_value);
-  // digitalWrite(lamp2, lamp2_state_value);
+  digitalWrite(lamp1, lamp1_state_value);
+  digitalWrite(lamp2, lamp2_state_value);
 
   // Return the response
   client.println("HTTP/1.1 200 OK");
